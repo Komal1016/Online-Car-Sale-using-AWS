@@ -1,0 +1,28 @@
+
+{% include 'main_head.html' %}
+<body style="">
+    <div class="row m-80">
+        <div class="w-10 ">
+        </div>
+        <div class="card w-30 p-10" style="">
+             <form action="owner_login_action" method="post">
+                <div class="form-title text-center mt-20">Car Owner Login</div>
+                <div class="p-15">
+                    <div class="form-input mt-5">
+                        <label for="email" class="label">Email: </label><br>
+                        <input type="text" id="email"  name="email" class="input w-100 p-15" placeholder="Enter Email" required>
+                    </div>
+                    <div class="form-input mt-20">
+                        <label for="password" class="label">Password: </label><br>
+                        <input type="password" id="password"  name="password" class="input w-100 p-15" placeholder="Enter password" required>
+                    </div>
+                    <div class="text-center mt-30"><input type="submit" class="btn p-5 w-50" value="Login"></div>
+                </div>
+            </form>
+            <div class=" m-20">
+                don't have an Account?<a href="owner_registration" class="btn w-35  p-10">Register Now</a>
+            </div>
+        </div>
+    </div>
+</body>
+

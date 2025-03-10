@@ -1,0 +1,16 @@
+{% if session['role'] == 'admin' %}
+	{% include 'admin_head.html'%}
+{% endif %}
+{% if session['role'] == 'owner' %}
+	{% include 'owner_head.html'%}
+{% endif %}
+{% if session['role'] == 'customer' %}
+	{% include "customer_head.html" %}
+{% endif %}
+
+<div class="row mt-100">
+    <div class="w-20"></div>
+    <div class="w-60">
+        <div class="text-center h3 mt-50 pt-5">{{msg}}</div>
+    </div>
+</div>

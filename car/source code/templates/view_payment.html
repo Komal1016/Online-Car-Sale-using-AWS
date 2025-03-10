@@ -1,0 +1,61 @@
+{% if session['role'] == "owner" %}
+    {% include 'owner_head.html' %}
+{% endif %}
+{% if session['role'] == "customer"%}
+    {% include 'customer_head.html' %}
+{% endif %}
+{% if session['role'] == "admin"%}
+    {% include 'admin_head.html' %}
+{% endif %}
+<div class="form-title text-center card-header mt-30" style="color:black;">View Payments</div>
+<div class="row card p-15 m-50">
+    <div class="w-100">
+        <div class="row">
+            <div class="w-20">
+               <div class="form-input mt-10">Date: </div>
+                <div class="">{{payment[6].strftime("%d-%m-%Y %I:%M %p")}}</div>
+            </div>
+            <div class="w-20">
+                <div class="form-input mt-10">Card Number:</div>
+                <div class="">{{payment[2]}}</div>
+            </div>
+            <div class="w-20">
+                 <div class="form-input mt-10">Card Holder Number:</div>
+                <div class="">{{payment[3]}}</div>
+            </div>
+            <div class="w-20">
+                <div>
+                    <div class="form-input mt-10">Total Price</div>
+                    <div class="">{{payment[1]}}</div>
+                </div>
+
+            </div>
+            <div class="w-20">
+                <div class="form-input mt-10">CVV Number</div>
+                <div class="">{{payment[5]}}</div>
+            </div>
+             {% if session[role] != 'customer' %}
+                <div class="w-20">
+                    <div class="form-input mt-10">Admin Amount</div>
+                    <div class="">$ {{payment[8]}}</div>
+                </div>
+                <div class="w-20">
+                    <div class="form-input mt-10">Owner Amount</div>
+                    <div class="">$ {{payment[9]}}</div>
+                </div>
+            {% endif %}
+            <div class="w-20">
+                <div class="form-input mt-10">Total Amount</div>
+                <div  class="">$ {{float(payment[8])+float(payment[9])}}</div>
+            </div>
+
+            </div>
+            <div class="w-20">
+                <div class="form-input mt-10">Status</div>
+                <div class="">{{payment[7]}}</div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

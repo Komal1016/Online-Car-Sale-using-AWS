@@ -1,0 +1,45 @@
+{% include 'admin_head.html' %}
+<body style="background-color: #bdbdbd;">
+    <div class="row">
+        {% for owner in owners %}
+        <div class="w-20 m-30">
+            <div class="card p-15 card-header card-footer">
+                <div class="card-item">
+                    <div class="form-input">
+                        Owner Name:-
+                    </div>
+                    <div class="card-text">
+                        {{owner[1]}} {{owner[2]}}
+                    </div>
+                    <div class="form-input">
+                        Email:-
+                    </div>
+                    <div class="card-text">
+                        {{owner[3]}}
+                    </div>
+                    <div class="form-input">
+                        Phone Number:-
+                    </div>
+                    <div class="card-text">
+                        {{owner[4]}}
+                    </div>
+
+                    <div class="form-input">
+                        Status:-
+                    </div>
+                    <div class="card-text">
+                        {{owner[6]}}
+                    </div>
+                    <div class="text-center mt-10">
+                        {% if owner[6] == "De-Activated" %}
+                            <a href="activate1?owner_id={{owner[0]}}" class="btn mt-5 p-10">Activate</a>
+                        {% else %}
+                            <a href="activate2?owner_id={{owner[0]}}" class="btn mt-5 p-10">De-Activate</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>    

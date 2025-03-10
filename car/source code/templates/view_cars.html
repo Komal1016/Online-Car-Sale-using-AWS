@@ -1,0 +1,9 @@
+{% if session['role'] == "owner" %}
+    {% include 'owner_head.html' %}
+{% endif %}
+{% if session['role'] == "customer"%}
+    {% include 'customer_head.html' %}
+{% endif %}
+{% if session['role'] == "admin"%}
+    {% include 'admin_head.html' %}
+{% endif %}

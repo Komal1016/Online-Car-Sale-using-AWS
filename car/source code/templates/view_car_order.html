@@ -1,0 +1,215 @@
+{% if session['role'] == "owner" %}
+    {% include 'owner_head.html' %}
+{% endif %}
+{% if session['role'] == "customer"%}
+    {% include 'customer_head.html' %}
+{% endif %}
+{% if session['role'] == "admin"%}
+    {% include 'admin_head.html' %}
+{% endif %}
+
+{% for car_order in car_orders %}
+    {% set customer = get_customer_by_customer_id(car_order[5]) %}
+    {% set car = get_car_by_car_id(car_order[4]) %}
+    {% set owner = get_owner_by_owner_id(car[15]) %}
+    <body style="">
+        <div class="card m-20 p-20">
+            <div class="row space-between p-10">
+                <div class="">
+                    <div class="form-input">
+                        Car Request Date
+                    </div>
+                    <div>
+                        {{car_order[3].strftime("%d-%m-%Y %I:%M %p")}}
+                    </div>
+
+                    <div class="w-100 mt-15">
+                        <img src="static/picture/{{car[11]}}" class="img" alt="" style="height:250px;max-width:90%;">
+                    </div>
+                </div>
+                <div class="car">
+                    <div class="form-input">
+                        Make
+                    </div>
+                    <div>
+                        {{car[1]}}
+                    </div>
+                    <div class="form-input">
+                        Car Model
+                    </div>
+                    <div>
+                        {{car[2]}}
+                    </div>
+                    <div>
+                        <div class="form-input"> <label>Manufacturing Year:</label></div>
+                        <div>{{car[3]}}</div>
+                    </div>
+                    <div class="form-input">
+                        Miles Travelled
+                    </div>
+                    <div>
+                        {{car[4]}}
+                    </div>
+                    <div class="form-input">
+                        Licence Number
+                    </div>
+                    <div>
+                        {{car[8]}}
+                    </div>
+
+                    <div class="form-input">
+                        MPG
+                    </div>
+                    <div>
+                        {{car[9]}}
+                    </div>
+                    <div class="h6">
+                        <a href="../static/picture/{{car[13]}}">View Licence</a>
+                    </div>
+                </div>
+                <div class="owner">
+                    <div class="form-input">
+                        Owner Name
+                    </div>
+                    <div>
+                        {{owner[1]}} {{owner[2]}}
+                    </div>
+                    <div class="form-input">
+                        Owner Email
+                    </div>
+                    <div>
+                        {{owner[3]}}
+                    </div>
+                    <div class="form-input">
+                        Phone Number
+                    </div>
+                    <div>
+                        {{owner[4]}}
+                    </div>
+                    <div>
+                         <div class="form-input">Price</div>
+                            <div>$ {{car[5]}}</div>
+                    </div>
+
+                </div>
+                <div class="customer">
+                    <div class="form-input">
+                        Customer Name
+                    </div>
+                    <div>
+                        {{customer[1]}} {{customer[2]}}
+                    </div>
+                    <div class="form-input">
+                        Customer Email
+                    </div>
+                    <div>
+                        {{customer[3]}}
+                    </div>
+                    <div class="form-input">
+                        Phone Number
+                    </div>
+                    <div>
+                        {{customer[4]}}
+                    </div>
+                    <div class="form-input">
+                        Total Price
+                    </div>
+                    <div>
+                        $ {{car_order[1]}}
+                    </div>
+                    <div class="form-input">
+                        Customer Address
+                    </div>
+                    <div>
+                        {{customer[6]}}
+                    </div>
+                </div>
+            </div>
+            <div class="row space-between">
+
+            <div class="w-50">
+                <div class="row">
+                    <div class="w-20">
+                         <div class="form-input">Total Price</div>
+                        <div>$ {{car_order[1]}}</div>
+                    </div>
+                    {% if session['role'] != 'customer' %}
+                        <div class="w-20">
+                            <div class="form-input">Admin amount</div>
+                            <div>$ {{int(car_order[1])*10 / 100}}</div>
+                        </div>
+                        <div class="w-20">
+                             <div class="form-input">Owner amount</div>
+                            <div>$ {{int(car_order[1])*90 / 100}}</div>
+                        </div>
+                    {% endif %}
+                    <div class="w-20">
+                        <div class="form-input"> Status</div>
+                        <div>{{car_order[2]}}</div>
+                </div>
+
+                </div>
+            </div>
+
+            </div>
+
+            {% if session['role'] == "customer" %}
+                {% if car_order[2] == "requested"%}
+                    <div class="text-center"><a href="cancel?car_order_id={{car_order[0]}}" class="btn  mt-10 p-10">Cancel The Request</a></div>
+                {% endif %}
+                {% if car_order[2] == "Accepted" %}
+                    <div class="text-center"><b>Total: $ {{int(car_order[1])}}</b> &nbsp; <a href="payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">Pay Now</a></div>
+                {% endif %}
+                {% if car_order[2] == "Paid" %}
+                    <div class="text-center"><a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a></div>
+                {% endif %}
+                {% if car_order[2] == "Dispatched" %}
+                    <div class="text-center">
+                        <a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a>
+                        <a href="mark_as_delivered?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">Mark As Delivered</a>
+                    </div>
+                {% endif %}
+                {% if car_order[2] == "Delivered" %}
+                    <div class="text-center"><a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a></div>
+                {% endif %}
+            {% endif %}
+            {% if session['role'] == "owner" %}
+                {% if car_order[2] == "requested" %}
+                    <div class="row">
+                        <div class="w-25"></div>
+                        <div class="w-25">
+                            <div class="text-center w-100  mt-10">
+                                <div class="mt-20">
+                                    <a href="accept_order?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">Accept the Order</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-25">
+                            <div class="text-center mr-10">
+                                <div class="mt-20">
+                                    <a href="reject_order?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">Reject the Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if car_order[2] == "Paid" %}
+                <div class="text-center">
+                    <a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a>
+                    <a href="dispatch?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">Dispatch</a>
+                </div>
+                {% endif %}
+                {% if car_order[2] == "Dispatched" %}
+                    <div class="text-center">
+                        <a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a>
+                    </div>
+                {% endif %}
+                {% if car_order[2] == "Delivered" %}
+                        <div class="text-center">
+                            <a href="view_payment?car_order_id={{car_order[0]}}" class="btn mt-10 p-10">View Payment</a>
+                        </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </body>
+{% endfor %}

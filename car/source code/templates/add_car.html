@@ -1,0 +1,209 @@
+{% if session['role'] == "owner" %}
+    {% include 'owner_head.html' %}
+{% endif %}
+{% if session['role'] == "customer"%}
+    {% include 'customer_head.html' %}
+{% endif %}
+{% if session['role'] == "admin"%}
+    {% include 'admin_head.html' %}
+{% endif %}
+<div class="row p-10 space-around">
+
+    <div class="w-60">
+        <div class="p-5">
+        <form action="add_car">
+            <div class="row">
+                <div class="form-input p-10 mt-10">
+                    <label>Choose location</label>
+                    <select name="location_id" id="location_id" class="form-input w-100 p-5 mt-10">
+                        <option value="">Choose location</option>
+                        {% for location in locations: %}
+                            <option value="{{location[0]}}">{{location[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-input p-10 mt-10">
+                    <label>Search: </label>
+                    <input type="text"  name="keyword" value="{{keyword}}" class=" w-100 p-5 mt-10" placeholder="Search Car name or model">
+                </div>
+                <div class=" text-center p-10 mt-20"><input type="submit" value="Search" class="btn  p-10"></div>
+                </div>
+            </form>
+            <div class="row mt-20">
+                {% for car in cars %}
+                    <div class=" card bt w-100 p-10 mt-20">
+                    <div class="row space-around">
+                        <div class="image w-50 p-20">
+                            <img  class="img mt-20 " src="../static/picture/{{car[11]}}" alt="Card image" style="height:250px;max-width:80%;">
+                        </div>
+
+                        <div class="w-25 p-5">
+                            <div class="text-center h3"><h3>{{car[1]}}</h3></div>
+                            <div class="m-10">
+                                <div>
+                                    <div class="form-input mt-5"> <label>Model:</label></div>
+                                    <div>{{car[2]}}</div>
+                                </div>
+                                <div>
+                                    <div class="form-input mt-5"> <label>Manufacturing Year:</label></div>
+                                    <div>{{car[3]}}</div>
+                                </div>
+                                <div>
+                                    <div class="form-input mt-5"><label>Miles Travelled:</label></div>
+                                    <div>{{car[4]}}</div>
+                                </div>
+                                <div>
+                                    <div class="form-input mt-5"><label>Price:</label></div>
+                                    <div>$ {{car[5]}}</div>
+                                </div>
+                                <div>
+                                    <div class="form-input mt-5"><label>VIN Number:</label></div>
+                                    <div>{{car[7]}}</div>
+                                </div>
+                                <div>
+                                    <div class="form-input mt-5"><label>Licence Plate:</label></div>
+                                    <div>{{car[8]}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-25 p-5 mt-45">
+                            {% if session['role']!='customer'%}
+                             <div>
+                                <div class="form-input mt-5"><label>Admin Commission:</label></div>
+                                <div>$ {{int(car[5])*10 / 100}}</div>
+                            </div>
+                             <div>
+                                <div class="form-input mt-5"><label>Owner Commission:</label></div>
+                                <div>$ {{int(car[5])*90 / 100}}</div>
+                            </div>
+                            {% endif %}
+                            <div>
+                                <div class="form-input mt-5"><label>MPG:</label></div>
+                                <div>{{car[9]}}</div>
+                            </div>
+                            <div>
+                                <div class="form-input mt-5"><label>Tax Price:</label></div>
+                                <div>{{car[10]}}</div>
+                            </div>
+                            <div class="form-input mt-15">
+                                <a href="../static/picture/{{car[13]}}">View Licence</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>{{car[6]}}</div>
+                    {% if session['role'] == "customer" %}
+                        {% set is_requested = is_customer_is_requested_for_car(car[0]) %}
+                        {% if is_requested %}
+                            <div class="mt-10 text-center">
+                                <a href="view_car_order?car_id={{car[0]}}" class="btn p-5">View Request</a>
+                            </div>
+                        {% else %}
+                            <form action="send_request">
+                                <div class="form">
+                                    <input type="hidden" name="car_id" value="{{car[0]}}">
+                                    <div class="w-50 m-auto">
+                                        <div class="row space-between">
+                                            <div class="form-input mt-10">
+                                               <input type="text" class="input w-100 p-15" id="total_price" name="total_price" placeholder="Enter Total Price" required>
+                                            </div>
+                                            <div class="text-center mt-10 middle">
+                                               <input type="submit" class="btn p-10" value="Send Request">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                    {% if session['role'] == "owner" %}
+                        <div class="mt-10 text-center">
+                            <a href="view_car_order?car_id={{car[0]}}" class="btn p-5">View Request</a>
+                        </div>
+                    {% endif %}
+                    {% if session['role'] == "admin" and car[12] == "Not Verified" %}
+                        <div class="mt-15 text-center">
+                            <a href="verify_car?car_id={{car[0]}}" class="btn mt-20 p-10">Verify</a>
+                        </div>
+                    {% endif %}
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if session['role'] == "owner" %}
+    <div class="w-30">
+        <div class="card p-5 mt-30">
+            <div class="form-title text-center card-header">Add Car</div>
+            <form action="add_car_action" method="post" enctype="multipart/form-data">
+                 <div class="form-input w-100 p-5 mt-10">
+						<label>Choose location</label>
+                        <select name="location_id" id="location_id2" class="form-input w-100 p-5 mt-10">
+							<option value="">Choose location</option>
+							{% for location in locations: %}
+								<option value="{{location[0]}}">{{location[1]}}</option>
+							{% endfor %}
+						</select>
+                    </div>
+                <div class="form row">
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="make">Make:</label>
+                        <input type="text" id="make" name="make" class="input w-100 p-15" placeholder="Enter Make" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="model">Model:</label>
+                        <input type="text" id="model" name="model" class="input w-100 p-15" placeholder="Enter Model" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="manufacturing_year">Year:</label>
+                        <input type="number" id="manufacturing_year" name="manufacturing_year" class="input w-100 p-15" placeholder="" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="miles_travelled">Miles Travelled:</label>
+                        <input type="text" id="miles_travelled" name="miles_travelled" class="input w-100 p-15" placeholder="Enter Miles Travelled" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price" class="input w-100 p-15" placeholder="Enter Price" required>
+                    </div>
+
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="vin_number">VIN Number:</label>
+                        <input type="text" id="vin_number" name="vin_number" class="input w-100 p-15" placeholder="VIN number" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="license_plate">Licence Plate:</label>
+                        <input type="text" id="license_plate" name="license_plate" class="input w-100 p-15" placeholder="Licence Plate" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="milage">MPG:</label>
+                        <input type="text" id="milage" name="milage" class="input w-100 p-15" placeholder="Milage" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="tax_amount">Tax Amount:</label>
+                        <input type="number" id="tax_amount" name="tax_amount" class="input w-100 p-15" placeholder="Insurance Amount" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="car_image">Car Image:</label>
+                        <input type="file" id="car_image" name="car_image" class="input w-80 m-10 p-10" required>
+                    </div>
+                    <div class="form-input w-50 p-5 mt-10">
+                        <label for="licence">Driver Licence:</label>
+                        <input type="file" id="licence" name="licence" class="input w-80 m-10 p-10" required>
+                    </div>
+                    <div class="form-input w-100 p-5 mt-10">
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" class="input w-100 p-15" placeholder="Description About Food Item" required></textarea>
+                    </div>
+                </div>
+                <div class="text-center"><input type="submit" class="btn p-5 w-50" value="Add Car"></div>
+            </form>
+            <div class="m-20">{{msg}}</div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+    </div>
+</div>

@@ -1,0 +1,74 @@
+
+{% include 'main_head.html' %}
+<body style="">
+    <div class="row m-80">
+        <div class="w-10 ">
+        </div>
+        <div class="card w-40 p-10" style="">
+             <form action="owner_registration_action" method="post">
+                    <div class="form-title text-center mt-30">Car Owner Registration</div>
+                         <div class="row">
+                              <div class="w-50">
+                                   <div class="form-input">
+                                        <label for="first_name" class="label">First Name: </label>
+                                        <input type="text" id="first_name"  name="first_name" class="input w-80 m-10 p-10" placeholder="Enter First Name" required>
+                                   </div>
+
+                                   <div class="form-input">
+                                        <label for="phone" class="label">Phone Number: </label>
+                                        <input type="number" id="phone"  name="phone" class="input w-80 m-10 p-10" placeholder="Enter Phone Nuber" required>
+                                   </div>
+
+                                   <div class="form-input">
+                                        <label for="password" class="label">Password: </label>
+                                        <input type="password" id="password"  name="password" class="input w-80 m-10 p-10" placeholder="Enter New Password" required>
+                                   </div>
+                                   <div class="form-input">
+                                        <label for="date_of_birth" class="label">Date Of Birth: </label>
+                                        <input type="date" id="date_of_birth"  name="date_of_birth" class="input w-80 m-10 p-10" placeholder="" required>
+                                  </div>
+
+
+                                   <div class="form-input w-95">
+                                        <label for="city" class="label">   City : </label>
+                                        <input type="text" id="city"  name="city" class="input w-80 m-10 p-10" placeholder="Enter City" required>
+                                   </div>
+                                   <div class="form-input">
+                                        <label for="zipcode" class="label">Zipcode: </label>
+                                        <input type="number" id="zipcode"  name="zipcode" class="input w-80 m-10 p-10" placeholder="Enter Zipcode" required>
+                                   </div>
+
+                              </div>
+                              <div class="w-50">
+                                    <div class="form-input">
+                                        <label for="last_name" class="label">Last Name: </label>
+                                        <input type="text" id="last_name"  name="last_name" class="input w-80 m-10 p-10" placeholder="Enter Last Name" required>
+                                   </div>
+                                    <div class="form-input">
+                                        <label for="email" class="label">Email: </label>
+                                        <input type="email" id="email"  name="email" class="input w-80 m-10 p-10" placeholder="Enter Email" required>
+                                   </div>
+                                    <div class="form-input">
+                                        <label for="conform_password" class="label">Conform Password: </label>
+                                        <input type="password" id="conform_password"  name="conform_password" class="input w-80 m-10 p-10" placeholder="Enter Conform Password" required>
+                                   </div>
+                                    <div class="form-input">
+                                        <label for="address" class="label">Address: </label>
+                                       <textarea  id="address"  name="address" class="input w-80 m-10 p-10" placeholder="Enter Your Address" required> </textarea>
+                                   </div>
+
+                                  <div class="form-input">
+                                        <label for="state" class="label">State: </label>
+                                        <input type="text" id="state"  name="state" class="input w-80 m-10 p-10" placeholder="Enter State" required>
+                                  </div>
+
+
+
+                              </div>
+                         </div>
+                         <input type="submit" class="btn w-90 mr-20 m-10 p-15" value="Register">
+               </form>
+
+        </div>
+    </div>
+</body>

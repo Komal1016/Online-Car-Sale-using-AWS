@@ -1,0 +1,34 @@
+{% include 'customer_head.html' %}
+
+<body class="payment_page">
+      <div class="card w-35 m-100" style="background-color: rgba(31, 30, 30, 0.781);">
+           <form action="payment_action" method="post">
+                <div class="form-title text-center card-header mt-30" style="color:aliceblue;">Payment Details</div>
+                <div class="form-title text-center" style="color:aliceblue;">Total Price: $ {{car_order[1]}}</div>
+                    <input type="hidden" name="car_order_id" value="{{car_order_id}}">
+                    <input type="hidden" name="total_price" value="{{car_order[1]}}">
+                    <div class="p-20">
+                         <div class="form-input" style="color:aliceblue;">
+                              <label for="card_number" class="label">Card Number: </label><br>
+                              <input type="number" id="card_number"  name="card_number" class="input w-100 p-15" placeholder="Enter Card Number" required>
+                         </div>
+                        <div class="form-input mt-20" style="color:aliceblue;">
+                              <label for="card_holder_name" class="label">Card Holder Name: </label><br>
+                              <input type="text" id="card_holder_name"  name="card_holder_name" class="input w-100 p-15" placeholder="Enter Card Holder Name" required>
+                        </div>
+                        <div class="form-input mt-20" style="color:aliceblue;">
+                              <label for="expired_date" class="label">Expired Date: </label><br>
+                              <input type="text" id="expired_date"  name="expired_date" class="input w-100 p-15" placeholder="Enter Expired Date" required>
+                        </div>
+                        <div class="form-input mt-20" style="color:aliceblue;">
+                              <label for="cvv" class="label">CVV Number: </label><br>
+                              <input type="number" id="cvv"  name="cvv" class="input w-100 p-15" placeholder="Enter CVV Number" required>
+                        </div>
+                        <div class="mt-10 text-center" >
+                            <input type="submit" class="btn mt-5 p-5 w-30" style="background-color:aliceblue;color:black;" value="PAY">
+                        </div>
+                    </div>
+           </form>
+      </div>
+</body>
+</html>
